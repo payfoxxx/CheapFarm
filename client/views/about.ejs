@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/styles/header.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/about.css" type="text/css"/>
+    <title>CheapFarm</title>
+</head>
+<body>
+    <div class="preloader">
+        <div class="sk-circle">
+            <div class="sk-circle1 sk-child"></div>
+            <div class="sk-circle2 sk-child"></div>
+            <div class="sk-circle3 sk-child"></div>
+            <div class="sk-circle4 sk-child"></div>
+            <div class="sk-circle5 sk-child"></div>
+            <div class="sk-circle6 sk-child"></div>
+            <div class="sk-circle7 sk-child"></div>
+            <div class="sk-circle8 sk-child"></div>
+            <div class="sk-circle9 sk-child"></div>
+            <div class="sk-circle10 sk-child"></div>
+            <div class="sk-circle11 sk-child"></div>
+            <div class="sk-circle12 sk-child"></div>
+          </div>
+    </div>
+    <div class="header">
+    <header>
+        <div class="header_section">
+        <a href="/">
+            <img src="/images/logo_test2.png">
+        </a>
+            <div class="header_item"><a href="#" class="header_item_txt">О проекте</a></div>
+            <div class="search_block">
+                <form action="/search" method="GET" class="search_form">
+                    <p><input type="search" name="nameDrug" placeholder="Введите название"></p>
+                    <p><button type="submit" id="btn"></button></p>
+                </form>
+            </div>
+            <% if (isLogged == false) { %>
+                <div class="header_item"><a href="/registration" class="header_item_txt">Регистрация</a></div>
+                <div class="header_item"><a href="/login" class="header_item_txt">Вход</a></div>
+            <%} else { %>
+                <div class="header_item"><a href="/profile" class="header_item_txt">Профиль</a></div>
+                <div class="header_item"><a href="/logout" class="header_item_txt">Выход</a></div>
+            <%} %>
+        </div>
+    </header>
+    </div>
+    <div class="information">
+        <p>Вы находитесь на сайте CheapFarm, этот сайт создан для того, чтобы сравнивать цены в различных интернет-аптеках! 
+            Для поиска нужного лекарства Вы можете воспользоваться поиском на главной странице, либо поиском выше. 
+            На сайте доступна регистрация и авторизация, это дает Вам возможность добавлять товары в избранное, 
+            чтобы запомнить их стоимость в какой-то конкретный день, ведь цены в интернет-аптеках меняются очень часто.
+            На данный момент поиск происходит в городе Красноярск, и используются следующие аптеки: Нейрон, Аптека.RU, Аптека от склада,
+            Живика, Здравсити, Eapteka. 
+            Спасибо, что воспользовались этим сервисом!</p>
+    </div>
+    <script>
+        const preloader = document.querySelector('.preloader')
+        document.getElementById('btn').onclick = () => {
+            preloader.classList.add('preloader_open')
+        }
+        preloader.classList.add('preloader_hidden')
+    </script>
+</body>
+</html>

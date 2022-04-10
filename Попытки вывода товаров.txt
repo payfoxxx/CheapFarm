@@ -1,0 +1,52 @@
+Как на здравсити(пока очень нелепо)
+    <div class="content-main">
+    <ul class="big-vitrina">
+        <li class="content-item">
+            <div class="product-item">
+                <div class="product-item__wrapper">
+                    <a href="https://xn--80aaobudwcidrr.xn--p1ai/sites/neuron/images/logo.png" class="product-item__image"></a>
+                    <div class="product-item__description">
+                        <div class="product-item__panel-left">
+                            <p class="product-item__title"><%= nameDrug %></p> 
+                        </div>
+                        <div class="product-item__panel-right">
+                            <div class="product-item__price">
+                                <span>От <%= data[0].cost %> </span>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+
+        </li>
+
+    </ul>
+</div>
+
+Обычная наработка(Нелепо)
+    <div class="vitrina">
+        <div class="vitrina-block">
+            <p class="apteka_name">Нейрон</p>
+            <p class="drugName"><%= nameDrug %> </p>
+            <p><details>
+                <summary>От <%= data[0].cost %> </summary>
+                <% for(var i = 0; i < 10 && i < data.length; i++) {%>
+                    <div class="accord-block">
+                        <p><%= data[i].name %> </p>
+                        <p><%= data[i].cost %> </p>
+                    </div>
+                <%} %> 
+            </details></p>
+        </div>
+        <div class="vitrina-block">
+            <p>AptekaRU</p>
+        </div>
+    </div>
+
+Просто вывод названий
+    <div>
+        <h3>Результат поиска</h3>
+        <% for(var i = 0; i < data.length; i++) {%>
+        <li><%=data[i].name %></li>
+    <%} %>
+    </div>

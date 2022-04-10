@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/styles/header.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/registration.css" type="text/css"/>
+    <title>CheapFarm</title>
+</head>
+<body>
+    <div class="preloader">
+        <div class="sk-circle">
+            <div class="sk-circle1 sk-child"></div>
+            <div class="sk-circle2 sk-child"></div>
+            <div class="sk-circle3 sk-child"></div>
+            <div class="sk-circle4 sk-child"></div>
+            <div class="sk-circle5 sk-child"></div>
+            <div class="sk-circle6 sk-child"></div>
+            <div class="sk-circle7 sk-child"></div>
+            <div class="sk-circle8 sk-child"></div>
+            <div class="sk-circle9 sk-child"></div>
+            <div class="sk-circle10 sk-child"></div>
+            <div class="sk-circle11 sk-child"></div>
+            <div class="sk-circle12 sk-child"></div>
+          </div>
+    </div>
+    <div class="header">
+    <header>
+        <div class="header_section">
+        <a href="/">
+            <img src="/images/logo_test2.png">
+        </a>
+            <div class="header_item"><a href="#" class="header_item_txt">О проекте</a></div>
+            <div class="search_block">
+                <form action="/search" method="GET" class="search_form">
+                    <p><input type="search" name="nameDrug" placeholder="Введите название"></p>
+                    <p><button type="submit" id="btn"></button></p>
+                </form>
+            </div>
+        </div>
+    </header>
+    </div>
+    <div class="registr">
+        <form action="/auth/registration" method="POST" class="registr_form">
+            <p><label class="name">Имя: <input type="text" name="name" id="name" placeholder="Введите имя"/></label></p>
+            <p><label class="username">Логин: <input type="text" name="username" id="username" placeholder="Введите логин" /></label></p>
+            <p><label class="email">E-mail: <input type="email" name="email" id="email" placeholder="Введите Email"/></label></p>
+            <p><label class="password">Пароль: <input type="password" name="password" id="password" placeholder="Введите пароль" /></label></p>
+            <p><label class="check_password">Подтвердите пароль: <input type="password" name="check_password" id="check_password" placeholder="Введите пароль" /></label></p>
+            <p><button type="submit" id="btn_registr" class="button-33">Зарегистрироваться</button></p>      
+        </form>
+    </div>
+    <script>
+        const preloader = document.querySelector('.preloader')
+        document.getElementById('btn').onclick = () => {
+            preloader.classList.add('preloader_open')
+        }
+        preloader.classList.add('preloader_hidden')
+    </script>
+</body>
+</html>

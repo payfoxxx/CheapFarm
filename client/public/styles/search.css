@@ -1,0 +1,86 @@
+div{
+  overflow: hidden;
+  padding: 17px 20px;
+  position: relative;
+  display: block;
+}
+
+*{
+    margin: 0;
+}
+
+div span:nth-child(1){
+    width: 20%;
+    ;
+}
+
+div span:nth-child(2){
+    width: 35%;
+   
+}
+
+div span:nth-child(3){
+    width: 45%;
+}
+
+div span{
+    float: left;
+    font-size: 15px;
+    padding: 0 15px 0 0;
+    box-sizing: border-box;
+}
+
+.vitrina-item{
+    position: relative;
+    width: 1000px;
+    left: 200px;
+    border: 3px solid green;
+    border-radius: 20px;
+    
+}
+
+.test{
+    text-align: center;
+    font-size: 32px;
+}
+
+.cost_txt{
+  text-align: center;
+  font-size: 32px;
+}
+
+.vnytr{
+    border: 2px solid greenyellow;
+}
+
+.vnytr span:nth-child(1){
+    width: 30%;
+}
+.vnytr span:nth-child(2){
+    width: 50%;
+}
+.vnytr span:nth-child(3){
+    width: 20%;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+summary {
+  list-style: none;
+}
+
+summary:after{
+  content: "\f104";
+  font-family: FontAwesome;
+  font-size: 32px;
+  margin-left: 750px;
+  margin-bottom: 50px;
+  transition: .5s;
+}
+
+details[open] > summary:after{
+  content: "\f107";
+  font-family: FontAwesome;
+}
+
