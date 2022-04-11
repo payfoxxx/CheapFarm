@@ -6,7 +6,7 @@ const port = 9090;
 
 const puppeteer = require('puppeteer');
 var request = require('request');
-const bodypars = bodyParser.urlencoded({extended: false});
+const bodypars = bodyParser.urlencoded({ extended: false });
 
 /*Парсим русский язык var URL = `https://apteka.ru/search/?q=${encodeURIComponent('лизобакт')}`;
 var URL = `https://apteka.ru/search/?q=${encodeURIComponent('доктор%20мом')}`;
@@ -14,7 +14,7 @@ request(URL, function (err, res, body) {
     if (err) throw err;
     console.log(body);
     console.log(res.statusCode);
-});*/ 
+});*/
 
 /* Парсинг здравсити(переделать на пупитере)const parse = async() => {
     const getHTML = async(link) => {
@@ -32,7 +32,7 @@ request(URL, function (err, res, body) {
 parse(); */
 
 //Здравсити (название+цена) (почему-то в два раза больше?)
-(async function (){
+/*(async function (){
     let res = [];
     const browser = await puppeteer.launch({headless: false});
     const page = await browser.newPage();
@@ -71,7 +71,7 @@ parse(); */
         return a.cost - b.cost;
     });
     browser.close();
-})(); 
+})(); */
 
 // Живика (название + цена) выполнено (почему-то если много товаров, не будет картинок)
 /*(async function (){
@@ -160,56 +160,63 @@ parse(); */
 })();*/
 
 //Аптека.ру (название+цена) выполнено
-/*(async function (){
+(async function() {
     let res = [];
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(0)
-    await page.goto(`https://apteka.ru/krasnoyarsk/search/?q=${encodeURIComponent('лизобакт')}`);
-    
-    try{
-    await page.waitForSelector('.card-order-section');
-    await page.setViewport({
-        width: 1200,
-        height: 800
-    })
-    }
-    catch(e){
+    await page.goto(`https://apteka.ru/krasnoyarsk/search/?q=${encodeURIComponent('доктор мом')}`);
+
+    try {
+        await page.waitForSelector('.card-order-section');
+        await page.setViewport({
+            width: 1200,
+            height: 800
+        })
+    } catch (e) {
         console.log("Oshibka")
     }
-    let html = await page.evaluate(async () => {
+    let html = await page.evaluate(async() => {
         let pagee = []
         let divs = document.querySelectorAll('div.catalog-card');
         console.log(divs)
-        divs.forEach(div =>{
+        divs.forEach(div => {
             let a = div.querySelector('span.catalog-card__name');
             let span = div.querySelector('span.moneyprice__content');
-            let img = div.querySelector('img');
-            img = img.getAttribute('src');
-            console.log(img);
-            cost = span.innerText;
-            cost = cost.replace(/\s+/g,'');
-            let link = 'apteka.ru'+div.querySelector('a.catalog-card__link').getAttribute('href');
-            let obj = {
-                test: a.innerText,
-                cost: parseInt(cost),
-                image: img,
-                link: link
+            if (span != null) {
+                cost = span.innerText;
+                cost = cost.replace(/\s+/g, '');
+                let link = 'apteka.ru' + div.querySelector('a.catalog-card__link').getAttribute('href');
+                let image;
+                try {
+                    image = div.querySelector('img').getAttribute('src');
+                } catch {
+                    image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
+                }
+                /*let image = div.querySelector('img').getAttribute('src');
+                if (!image) {
+                    image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
+                }*/
+                let obj = {
+                    name: a.innerText,
+                    cost: parseInt(cost),
+                    image: image,
+                    link: link
+                }
+                pagee.push(obj);
             }
-            pagee.push(obj);
         })
-
         return pagee;
-    }, {waitUntil: 'div.card-order-section'})
+    }, { waitUntil: 'div.card-order-section' })
 
     await res.push(html);
     console.log("Аптека.ру");
     console.log(res[0]);
-    res[0].sort(function(a,b){
+    res[0].sort(function(a, b) {
         return a.cost - b.cost;
     });
     //browser.close();
-})();*/ 
+})();
 
 //Eapteka (название + цена)
 /*(async function (){
@@ -342,10 +349,10 @@ parse(); */
     console.log(res);
 })();*/
 
-app.listen(port, hostname, () =>{
+app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
 });
 
-app.get("/", (req,res) => {
+app.get("/", (req, res) => {
     request.post("http://127.0.0.1:8000/start.html")
 })
