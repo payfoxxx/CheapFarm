@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="/styles/search.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/search.css" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/styles/header.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/header.css" type="text/css" />
     <meta charset="utf-8">
     <title>CheapFarm</title>
 </head>
+
 <body>
     <div class="preloader">
         <div class="sk-circle">
@@ -22,14 +24,14 @@
             <div class="sk-circle10 sk-child"></div>
             <div class="sk-circle11 sk-child"></div>
             <div class="sk-circle12 sk-child"></div>
-          </div>
+        </div>
     </div>
     <div class="header">
         <header>
             <div class="header_section">
-            <a href="/">
-                <img src="/images/logo_test2.png">
-            </a>
+                <a href="/">
+                    <img src="/images/logo_test2.png">
+                </a>
                 <div class="header_item"><a href="/about" class="header_item_txt">О проекте</a></div>
                 <div class="search_block">
                     <form action="/search" method="GET" class="search_form">
@@ -40,23 +42,24 @@
                 <% if (isLogged == false) { %>
                     <div class="header_item"><a href="/registration" class="header_item_txt">Регистрация</a></div>
                     <div class="header_item"><a href="/login" class="header_item_txt">Вход</a></div>
-                <%} else { %>
-                    <div class="header_item"><a href="/profile" class="header_item_txt">Профиль</a></div>
-                    <div class="header_item"><a href="/logout" class="header_item_txt">Выход</a></div>
-                <%} %>
+                    <%} else { %>
+                        <div class="header_item"><a href="/profile" class="header_item_txt">Профиль</a></div>
+                        <div class="header_item"><a href="/logout" class="header_item_txt">Выход</a></div>
+                        <%} %>
             </div>
         </header>
-        </div>
-    <div id="neyron" class="vitrina-item">
-        <details>
-        <summary>
-        <span>
+    </div>
+    <div class="table">
+        <div id="neyron" class="vitrina-item">
+            <details>
+                <summary>
+                    <span>
             <a href="https://аптеканейрон.рф/search/?name=<%=nameDrug %>">
                 <img src="https://xn--80aaobudwcidrr.xn--p1ai/sites/neuron/images/logo.png" width="84px" height="84px"></a>
             <p>Нейрон</p>
         </span>
-        <span class="test"><%= nameDrug %> </span>
-        <span class="cost_txt">
+                    <span class="test"><%= nameDrug %> </span>
+                    <span class="cost_txt">
             
                 <% if(dataNeyron.length == 0) {%>
                     Товара нет <%} else { %>
@@ -73,22 +76,22 @@
                         <span><%= dataNeyron[i].name %> </span>
                         <span><%= dataNeyron[i].cost %> <i class="fa fa-rub"></i> </span>
                     </div>
-                <%} %>
-         
-        
-    </details>
-    </div>
-   
-    <div id="aptekaRU" class="vitrina-item">
-        <details>
-        <summary>
-        <span>
+                    <%} %>
+
+
+            </details>
+        </div>
+
+        <div id="aptekaRU" class="vitrina-item">
+            <details>
+                <summary>
+                    <span>
             <a href="https://apteka.ru/krasnoyarsk/search/?q=<%=nameDrug %> ">
             <img src="https://gastrarex.ru/assets/images/pharmacies/pharmacy_aptecaru.png" width="84px" height="84px"></a>
             <p>Аптека.RU</p>
         </span>
-        <span class="test"><%= nameDrug %> </span>
-        <span class="cost_txt">
+                    <span class="test"><%= nameDrug %> </span>
+                    <span class="cost_txt">
             <% if(dataAptekaRU.length == 0) {%>
                 Товара нет <%} else { %>
                     От <%= dataAptekaRU[0].cost %> <i class="fa fa-rub"></i>
@@ -103,22 +106,22 @@
                         </span>
                     <span><%= dataAptekaRU[i].name %> </span>
                     <span><%= dataAptekaRU[i].cost %> <i class="fa fa-rub"></i> </span>
-                    </div>
-                <%} %>
+        </div>
+        <%} %>
             </span>
-    </details>
+            </details>
     </div>
 
     <div id="Zhivika" class="vitrina-item">
         <details>
-        <summary>
-        <span>
+            <summary>
+                <span>
             <a href="https://krasnoyarsk.aptekazhivika.ru/search/<%=nameDrug %> ">
             <img src="https://vev.ru/wp-content/uploads/2021/11/EGR8OU9XkAAl5q6.jpg" width="84px" height="84px"></a>
             <p>Живика</p>
         </span>
-        <span class="test"><%= nameDrug %> </span>
-        <span class="cost_txt">
+                <span class="test"><%= nameDrug %> </span>
+                <span class="cost_txt">
             <% if(dataZhivika.length == 0) {%>
                 Товара нет <%} else { %>
                     От <%= dataZhivika[0].cost %> <i class="fa fa-rub"></i>
@@ -131,24 +134,24 @@
                         <span><a href="<%= dataZhivika[i].link %> ">
                             <img src="<%= dataZhivika[i].image %> " width="68px" height="68px"></a>
                         </span>
-                    <span><%= dataZhivika[i].name %> </span>
-                    <span><%= dataZhivika[i].cost %> <i class="fa fa-rub"></i> </span>
-                    </div>
-                <%} %>
-            </span>
-    </details>
+                <span><%= dataZhivika[i].name %> </span>
+                <span><%= dataZhivika[i].cost %> <i class="fa fa-rub"></i> </span>
     </div>
+    <%} %>
+        </span>
+        </details>
+        </div>
 
-    <div id="Apteka-ot-sklada" class="vitrina-item">
-        <details>
-        <summary>
-        <span>
+        <div id="Apteka-ot-sklada" class="vitrina-item">
+            <details>
+                <summary>
+                    <span>
             <a href="https://apteka-ot-sklada.ru/krasnoyarsk/catalog?q=<%=nameDrug %> ">
             <img src="https://visitnoyabrsk.ru/wp-content/uploads/2020/08/f210d24906f67859a8cd9fadbef1d3a9-e1597054478708.jpeg" width="84px" height="84px"></a>
             <p>Аптека-от-склада</p>
         </span>
-        <span class="test"><%= nameDrug %> </span>
-        <span class="cost_txt">
+                    <span class="test"><%= nameDrug %> </span>
+                    <span class="cost_txt">
             <% if(dataAptekaOtSklada.length == 0) {%>
                 Товара нет <%} else { %>
                     От <%= dataAptekaOtSklada[0].cost %> <i class="fa fa-rub"></i>
@@ -163,22 +166,22 @@
                         </span>
                     <span><%= dataAptekaOtSklada[i].name %> </span>
                     <span><%= dataAptekaOtSklada[i].cost %> <i class="fa fa-rub"></i> </span>
-                    </div>
-                <%} %>
+        </div>
+        <%} %>
             </span>
-    </details>
-    </div>
+            </details>
+            </div>
 
-    <div id="Eapteka" class="vitrina-item">
-        <details>
-        <summary>
-        <span>
+            <div id="Eapteka" class="vitrina-item">
+                <details>
+                    <summary>
+                        <span>
             <a href="https://eapteka.ru/krasnoyarsk/search/?q=<%=nameDrug %> ">
             <img src="https://telegra.ph/file/32b9185e4d0b5215249b5.jpg" width="84px" height="84px"></a>
             <p>Eapteka</p>
         </span>
-        <span class="test"><%= nameDrug %> </span>
-        <span class="cost_txt">
+                        <span class="test"><%= nameDrug %> </span>
+                        <span class="cost_txt">
             <% if(dataEapteka.length == 0) {%>
                 Товара нет <%} else { %>
                     От <%= dataEapteka[0].cost %> <i class="fa fa-rub"></i>
@@ -191,24 +194,24 @@
                         <span><a href="<%= dataEapteka[i].link %> ">
                             <img src="<%= dataEapteka[i].image %> " width="68px" height="68px"></a>
                         </span>
-                    <span><%= dataEapteka[i].name %> </span>
-                    <span><%= dataEapteka[i].cost %> <i class="fa fa-rub"></i> </span>
-                    </div>
-                <%} %>
-            </span>
-    </details>
-    </div>
+                        <span><%= dataEapteka[i].name %> </span>
+                        <span><%= dataEapteka[i].cost %> <i class="fa fa-rub"></i> </span>
+            </div>
+            <%} %>
+                </span>
+                </details>
+                </div>
 
-    <div id="Zdravcity" class="vitrina-item">
-        <details>
-        <summary>
-        <span>
+                <div id="Zdravcity" class="vitrina-item">
+                    <details>
+                        <summary>
+                            <span>
             <a href="https://zdravcity.ru/search/r_krasnoyarsk/?what=<%=nameDrug %> ">
             <img src="https://avatars.mds.yandex.net/i?id=502ba7086efe2ee71fd4a5af7d65f23d-5888920-images-thumbs&n=13" width="84px" height="84px"></a>
             <p>Здравсити</p>
         </span>
-        <span class="test"><%= nameDrug %> </span>
-        <span class="cost_txt">
+                            <span class="test"><%= nameDrug %> </span>
+                            <span class="cost_txt">
             <% if(dataZdravcity.length == 0) {%>
                 Товара нет <%} else { %>
                     От <%= dataZdravcity[0].cost %> <i class="fa fa-rub"></i>
@@ -221,23 +224,24 @@
                         <span><a href="<%= dataZdravcity[i].link %> ">
                             <img src="<%= dataZdravcity[i].image %> " width="68px" height="68px"></a>
                         </span>
-                    <span><%= dataZdravcity[i].name %> </span>
-                    <span><%= dataZdravcity[i].cost %> <i class="fa fa-rub"></i> </span>
-                    </div>
+                            <span><%= dataZdravcity[i].name %> </span>
+                            <span><%= dataZdravcity[i].cost %> <i class="fa fa-rub"></i> </span>
+                </div>
                 <%} %>
-            </span>
-    </details>
-    </div>
+                    </span>
+                    </details>
+                    </div>
+                    </div>
 
-    <script>
-    const preloader = document.querySelector('.preloader')
-    document.getElementById('btn').onclick = () => {
-        preloader.classList.add('preloader_open')
-}
-    window.addEventListener('load', () => { /* Страница загружена, включая все ресурсы */
-  preloader.classList.add('preloader_hidden') /* добавляем ему класс для скрытия */
-})
-
-    </script>
+                    <script>
+                        const preloader = document.querySelector('.preloader')
+                        document.getElementById('btn').onclick = () => {
+                            preloader.classList.add('preloader_open')
+                        }
+                        window.addEventListener('load', () => { /* Страница загружена, включая все ресурсы */
+                            preloader.classList.add('preloader_hidden') /* добавляем ему класс для скрытия */
+                        })
+                    </script>
 </body>
+
 </html>
