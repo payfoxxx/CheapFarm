@@ -31,52 +31,52 @@ request(URL, function (err, res, body) {
 
 parse(); */
 
-//Здравсити (название+цена) (почему-то в два раза больше?)
-/*(async function (){
+//Здравсити (название+цена) 
+/*(async function() {
     let res = [];
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(0)
-    await page.goto(`https://zdravcity.ru/search/r_krasnoyarsk/?what=${encodeURIComponent('лизобакт')}`, {waitUntil: "networkidle0"});
+    await page.goto(`https://zdravcity.ru/search/r_krasnoyarsk/?what=${encodeURIComponent('лизобакт')}`, { waitUntil: "networkidle0" });
 
     //await page.waitForSelector('div.b-product-item-new__wrapper');
     await page.setViewport({
         width: 1200,
         height: 800
     })
-    let html = await page.evaluate(async () => {
+    let html = await page.evaluate(async() => {
         let pagee = []
-        let divs = document.querySelectorAll('div.sc-7d521fa8-0');
-        divs.forEach(div =>{
-            let a = div.querySelector('a.sc-3a08f6ad-6');
-            let span = div.querySelector('div.sc-3af8b63b-0');
-            if(span != null){
+        let divs = document.querySelectorAll('div.sc-e16c6409-2');
+        divs.forEach(div => {
+            let a = div.querySelector('a.sc-e16c6409-6');
+            let span = div.querySelector('div.Price_price__qHqZv');
+            if (span != null) {
                 cost = span.innerText;
-                cost = cost.replace(/\s+/g,'');
-            let obj = {
-                name: a.getAttribute('title'),
-                cost: parseInt(cost),
-                image: div.querySelector('img').getAttribute('src'),
-                link: "https://zdravcity.ru"+a.getAttribute('href')
+                cost = cost.replace(/\s+/g, '');
+                let obj = {
+                    name: a.getAttribute('title'),
+                    cost: parseInt(cost),
+                    image: div.querySelector('img').getAttribute('src'),
+                    link: "https://zdravcity.ru" + a.getAttribute('href')
+                }
+                pagee.push(obj);
             }
-            pagee.push(obj);
-        }
-        }) 
+        })
         return pagee;
-    }, {waitUntil: 'div.b-product-item-new__wrapper'})
+    }, { waitUntil: 'div.b-product-item-new__wrapper' })
     await res.push(html);
     console.log("Здравсити");
     console.log(res);
-    res[0].sort(function(a,b){
+    res[0].sort(function(a, b) {
         return a.cost - b.cost;
     });
     browser.close();
 })(); */
 
 // Живика (название + цена) выполнено (почему-то если много товаров, не будет картинок)
-/*(async function (){
+/*(async function() {
     let res = [];
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(0)
     await page.goto(`https://krasnoyarsk.aptekazhivika.ru/search/${encodeURIComponent('панавир')}`);
@@ -86,30 +86,30 @@ parse(); */
         width: 1200,
         height: 800
     })
-    let html = await page.evaluate(async () => {
+    let html = await page.evaluate(async() => {
         let pagee = []
         let divs = document.querySelectorAll('div.product');
-        divs.forEach(div =>{
+        divs.forEach(div => {
             let a = div.querySelector('a.product__title');
             let span = div.querySelector('span.product__active-price-number');
-            if(span != null){
+            if (span != null) {
                 cost = span.innerText;
-                cost = cost.replace(/\s+/g,'');
+                cost = cost.replace(/\s+/g, '');
             }
             let obj = {
                 name: a.innerText,
                 cost: parseInt(cost),
                 image: div.querySelector('img.product__img').getAttribute('src'),
-                link: "https://krasnoyarsk.aptekazhivika.ru"+div.querySelector('a.product__title').getAttribute('href')
+                link: "https://krasnoyarsk.aptekazhivika.ru" + div.querySelector('a.product__title').getAttribute('href')
             }
             pagee.push(obj);
-        }) 
+        })
         return pagee;
-    }, {waitUntil: 'div.product__add-prod'})
+    }, { waitUntil: 'div.product__add-prod' })
     await res.push(html);
     console.log("Живика");
-    
-    res[0].sort(function(a,b){
+
+    res[0].sort(function(a, b) {
         return a.cost - b.cost;
     });
     console.log(res[0]);
@@ -117,9 +117,9 @@ parse(); */
 })();*/
 
 //Аптека от склада (название + цена) выполнено
-/*(async function (){
+/*(async function() {
     let res = [];
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(0)
     await page.goto(`https://apteka-ot-sklada.ru/krasnoyarsk/catalog?q=${encodeURIComponent('лизобакт')}`);
@@ -129,35 +129,35 @@ parse(); */
         width: 1200,
         height: 800
     })
-    let html = await page.evaluate(async () => {
+    let html = await page.evaluate(async() => {
         let pagee = []
         let divs = document.querySelectorAll('div.ui-card');
-        divs.forEach(div =>{
+        divs.forEach(div => {
             let a = div.querySelector('a.goods-card__link');
             let span = div.querySelector('div.goods-card__price');
-            if(span !=null){
+            if (span != null) {
                 cost = span.innerText;
-                cost = cost.replace(/\s+/g,'');
-            
-            let obj = {
-                name: a.innerText,
-                cost: parseInt(cost),
-                image: "https://apteka-ot-sklada.ru"+div.querySelector('img.goods-photo').getAttribute('src'),
-                link: "https://apteka-ot-sklada.ru"+div.querySelector('a.goods-card__link').getAttribute('href')
-            }
-            pagee.push(obj);
+                cost = cost.replace(/\s+/g, '');
+
+                let obj = {
+                    name: a.innerText,
+                    cost: parseInt(cost),
+                    image: "https://apteka-ot-sklada.ru" + div.querySelector('img.goods-photo').getAttribute('src'),
+                    link: "https://apteka-ot-sklada.ru" + div.querySelector('a.goods-card__link').getAttribute('href')
+                }
+                pagee.push(obj);
             }
         })
         return pagee;
-    }, {waitUntil: 'div.ui-card__footer'})
+    }, { waitUntil: 'div.ui-card__footer' })
     await res.push(html);
     console.log("Аптека-от-склада");
     console.log(res);
-    res[0].sort(function(a,b){
+    res[0].sort(function(a, b) {
         return a.cost - b.cost;
     });
     browser.close();
-})();*/
+})(); */
 
 //Аптека.ру (название+цена) выполнено
 (async function() {
@@ -186,17 +186,13 @@ parse(); */
             if (span != null) {
                 cost = span.innerText;
                 cost = cost.replace(/\s+/g, '');
-                let link = 'apteka.ru' + div.querySelector('a.catalog-card__link').getAttribute('href');
+                let link = 'apteka.ru' + div.querySelector('a').getAttribute('href');
                 let image;
                 try {
                     image = div.querySelector('img').getAttribute('src');
                 } catch {
                     image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
                 }
-                /*let image = div.querySelector('img').getAttribute('src');
-                if (!image) {
-                    image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
-                }*/
                 let obj = {
                     name: a.innerText,
                     cost: parseInt(cost),
