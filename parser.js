@@ -160,7 +160,7 @@ parse(); */
 })(); */
 
 //Аптека.ру (название+цена) выполнено
-(async function() {
+/*(async function() {
     let res = [];
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
@@ -212,7 +212,7 @@ parse(); */
         return a.cost - b.cost;
     });
     //browser.close();
-})();
+})(); */
 
 //Eapteka (название + цена)
 /*(async function (){
@@ -344,6 +344,417 @@ parse(); */
     await res.push(html);
     console.log(res);
 })();*/
+
+//Мегаптека
+/*(async function() {
+    let res = [];
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0)
+    await page.goto('https://megapteka.ru/perm')
+    await page.goto(`https://megapteka.ru/search?q=${encodeURIComponent('доктор мом')}`);
+
+    try {
+        await page.waitForSelector('div.card-item');
+        await page.setViewport({
+            width: 1200,
+            height: 800
+        })
+    } catch (e) {
+        console.log("Oshibka")
+    }
+    let html = await page.evaluate(async() => {
+        let pagee = []
+        let divs = document.querySelectorAll('div.card-item-wrap');
+        console.log(divs)
+        divs.forEach(div => {
+            let a = div.querySelector('div.card-item-info');
+            let span = div.querySelector('span.thisText');
+            if (span != null) {
+                cost = span.innerText;
+                cost = cost.replace(/\s+/g, '');
+                cost = cost.replace("₽", '');
+                cost = cost.replace("от", '');
+                let image;
+                try {
+                    image = div.querySelector('img').getAttribute('src');
+                } catch {
+                    image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
+                }
+                let link = "https://megapteka.ru" + div.querySelector('a').getAttribute('href');
+                let obj = {
+                    name: a.querySelector('a').innerText,
+                    cost: parseInt(cost),
+                    image: image,
+                    link: link
+                }
+                pagee.push(obj);
+            }
+        })
+        return pagee;
+    }, { waitUntil: 'div.card-item-wrap' })
+
+    await res.push(html);
+    console.log("Мегаптека");
+    console.log(res[0]);
+    res[0].sort(function(a, b) {
+        return a.cost - b.cost;
+    });
+    //browser.close();
+})();*/
+
+
+//Фармпермь
+/*(async function() {
+    let res = [];
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0)
+    await page.goto(`https://pharmperm.ru/catalog/?keyword=${encodeURIComponent('доктор мом')}`);
+
+    try {
+        await page.waitForSelector('div.catalog-items');
+        await page.setViewport({
+            width: 1200,
+            height: 800
+        })
+    } catch (e) {
+        console.log("Oshibka")
+    }
+    let html = await page.evaluate(async() => {
+        let pagee = []
+        let divs = document.querySelectorAll('div.offer-item-grid');
+        console.log(divs)
+        divs.forEach(div => {
+            let a = div.querySelector('a.link-dark');
+            let span = div.querySelector('div.price');
+            if (span != null) {
+                cost = span.innerText;
+                cost = cost.replace(/\s+/g, '');
+                cost = cost.replace("₽", '');
+                cost = cost.replace("от", '');
+                let image;
+                try {
+                    image = div.querySelector('img').getAttribute('src');
+                } catch {
+                    image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
+                }
+                let link = "https://pharmperm.ru" + div.querySelector('a.link-dark').getAttribute('href');
+                let obj = {
+                    name: a.innerText,
+                    cost: parseInt(cost),
+                    image: image,
+                    link: link
+                }
+                pagee.push(obj);
+            }
+        })
+        return pagee;
+    }, { waitUntil: 'div.offer-item-grid' })
+
+    await res.push(html);
+    console.log("пермфармация");
+    console.log(res[0]);
+    res[0].sort(function(a, b) {
+        return a.cost - b.cost;
+    });
+    //browser.close();
+})(); */
+
+//Фармленд
+/*(async function() {
+    let res = [];
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0)
+    await page.goto(`https://farmlend.ru/kazan/search?keyword=${encodeURIComponent('доктор мом')}`);
+
+    try {
+        await page.waitForSelector('div.p-item');
+        await page.setViewport({
+            width: 1200,
+            height: 800
+        })
+    } catch (e) {
+        console.log("Oshibka")
+    }
+    let html = await page.evaluate(async() => {
+        let pagee = []
+        let divs = document.querySelectorAll('div.p-item');
+        console.log(divs)
+        divs.forEach(div => {
+            let a = div.querySelector('div.pi-title');
+            let span = div.querySelector('div.pi-current');
+            if (span != null) {
+                cost = span.innerText;
+                cost = cost.replace(/\s+/g, '');
+                cost = cost.replace("₽", '');
+                cost = cost.replace("от", '');
+                let image;
+                try {
+                    image = div.querySelector('img').getAttribute('src');
+                    image = "farmlend.ru" + image;
+                } catch {
+                    image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
+                }
+                let link = "https://farmlend.ru" + div.querySelector('a').getAttribute('href');
+                let obj = {
+                    name: a.innerText,
+                    cost: parseInt(cost),
+                    image: image,
+                    link: link
+                }
+                pagee.push(obj);
+            }
+        })
+        return pagee;
+    }, { waitUntil: 'div.p-item' })
+
+    await res.push(html);
+    console.log("фармленд");
+    console.log(res[0]);
+    res[0].sort(function(a, b) {
+        return a.cost - b.cost;
+    });
+    //browser.close();
+})();*/
+
+//Бережная аптека
+/*(async function() {
+    let res = [];
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0)
+    await page.goto("https://b-apteka.ru/kazan")
+    await page.goto(`https://b-apteka.ru/search?q=${encodeURIComponent('доктор мом')}`);
+
+    try {
+        await page.waitForSelector('div.search-card__container');
+        await page.setViewport({
+            width: 1200,
+            height: 800
+        })
+    } catch (e) {
+        console.log("Oshibka")
+    }
+    let html = await page.evaluate(async() => {
+        let pagee = []
+        let divs = document.querySelectorAll('div.search-card__container');
+        console.log(divs)
+        divs.forEach(div => {
+            let a = div.querySelector('h4.header-card-search__title');
+            let a2 = div.querySelector('div.header-card-search__description')
+            let span = div.querySelector('div.price-search__present');
+            if (span != null) {
+                cost = span.innerText;
+                cost = cost.replace(/\s+/g, '');
+                cost = cost.replace("₽", '');
+                cost = cost.replace("от", '');
+                let image;
+                try {
+                    image = div.querySelector('img').getAttribute('src');
+                    image = "b-apteka.ru" + image;
+                } catch {
+                    image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
+                }
+                let link = div.querySelector('a').getAttribute('href');
+                let obj = {
+                    name: a.innerText + " " + a2.innerText,
+                    cost: parseInt(cost),
+                    image: image,
+                    link: link
+                }
+                pagee.push(obj);
+            }
+        })
+        return pagee;
+    }, { waitUntil: 'div.search-card__container' })
+
+    await res.push(html);
+    console.log("бережная аптека");
+    console.log(res[0]);
+    res[0].sort(function(a, b) {
+        return a.cost - b.cost;
+    });
+    //browser.close();
+})();*/
+
+//Ovita
+/*(async function() {
+    let res = [];
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0)
+    await page.goto(`https://ovita.ru/search/?word=${encodeURIComponent('доктор мом')}`);
+
+    try {
+        await page.waitForSelector('div.product');
+        await page.setViewport({
+            width: 1200,
+            height: 800
+        })
+    } catch (e) {
+        console.log("Oshibka")
+    }
+    let html = await page.evaluate(async() => {
+        let pagee = []
+        let divs = document.querySelectorAll('div.product');
+        console.log(divs)
+        divs.forEach(div => {
+            let a = div.querySelector('a');
+            let span = div.querySelector('span.rub');
+            if (span != null) {
+                cost = span.innerText;
+                cost = cost.replace(/\s+/g, '');
+                cost = cost.replace("₽", '');
+                cost = cost.replace("от", '');
+                let image;
+                try {
+                    image = div.querySelector('img').getAttribute('src');
+                    image = "https://ovita.ru" + image;
+                } catch {
+                    image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
+                }
+                let link = "https://ovita.ru" + div.querySelector('a').getAttribute('href');
+                let obj = {
+                    name: a.innerText,
+                    cost: parseInt(cost),
+                    image: image,
+                    link: link
+                }
+                pagee.push(obj);
+            }
+        })
+        return pagee;
+    }, { waitUntil: 'div.product' })
+
+    await res.push(html);
+    console.log("Ovita");
+    console.log(res[0]);
+    res[0].sort(function(a, b) {
+        return a.cost - b.cost;
+    });
+    //browser.close();
+})();*/
+
+//Wer
+/*(async function() {
+    let res = [];
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0)
+    await page.goto("https://wer.ru/vladivostok")
+    await page.goto(`https://wer.ru/search/?q=${encodeURIComponent('доктор мом')}`);
+
+    try {
+        await page.waitForSelector('div.prod');
+        await page.setViewport({
+            width: 1200,
+            height: 800
+        })
+    } catch (e) {
+        console.log("Oshibka")
+    }
+    let html = await page.evaluate(async() => {
+        let pagee = []
+        let divs = document.querySelectorAll('div.prod');
+        console.log(divs)
+        divs.forEach(div => {
+            let a = div.querySelector('span.product_title');
+            let a2 = div.querySelector('span.description');
+            let span = div.querySelector('div.price');
+            if (span != null) {
+                cost = span.querySelector('span').innerText;
+                cost = cost.replace(/\s+/g, '');
+                cost = cost.replace("₽", '');
+                cost = cost.replace("от", '');
+                let image;
+                try {
+                    image = div.querySelector('img').getAttribute('src');
+                    image = "https://wer.ru" + image;
+                } catch {
+                    image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
+                }
+                let link = "https://wer.ru" + div.querySelector('a').getAttribute('href');
+                let obj = {
+                    name: a.innerText + a2.innerText,
+                    cost: parseInt(cost),
+                    image: image,
+                    link: link
+                }
+                pagee.push(obj);
+            }
+        })
+        return pagee;
+    }, { waitUntil: 'div.prod' })
+
+    await res.push(html);
+    console.log("WER");
+    console.log(res[0]);
+    res[0].sort(function(a, b) {
+        return a.cost - b.cost;
+    });
+    //browser.close();
+})();*/
+
+//Aptekab
+(async function() {
+    let res = [];
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0)
+    await page.goto("https://aptekab.ru/vladivostok")
+    await page.goto(`https://aptekab.ru/?s=${encodeURIComponent('доктор мом')}`);
+
+    try {
+        await page.waitForSelector('div.search__item');
+        await page.setViewport({
+            width: 1200,
+            height: 800
+        })
+    } catch (e) {
+        console.log("Oshibka")
+    }
+    let html = await page.evaluate(async() => {
+        let pagee = []
+        let divs = document.querySelectorAll('div.search__item');
+        console.log(divs)
+        divs.forEach(div => {
+            let a = div.querySelector('div.search__item--text--inner');
+            let span = div.querySelector('div.search__price');
+            if (span != null) {
+                cost = span.innerText;
+                cost = cost.replace(/\s+/g, '');
+                cost = cost.replace("руб", '');
+                cost = cost.replace("от", '');
+                let image;
+                try {
+                    image = div.querySelector('img.search__item--img').getAttribute('src');
+                    image = "https://aptekab.ru" + image;
+                } catch {
+                    image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
+                }
+                let link = div.querySelector('a.search__item--text--title').getAttribute('href');
+                let obj = {
+                    name: a.querySelector('a').innerText,
+                    cost: parseInt(cost),
+                    image: image,
+                    link: link
+                }
+                pagee.push(obj);
+            }
+        })
+        return pagee;
+    }, { waitUntil: 'div.search__item' })
+
+    await res.push(html);
+    console.log("Aptekab");
+    console.log(res[0]);
+    res[0].sort(function(a, b) {
+        return a.cost - b.cost;
+    });
+    //browser.close();
+})();
 
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);
