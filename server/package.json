@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.3",
     "puppeteer": "^13.1.2",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "user-agents": "^1.0.1008"
   }
 }
