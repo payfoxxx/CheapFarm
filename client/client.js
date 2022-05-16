@@ -182,6 +182,11 @@ app.get("/search", bodypars, function(req, res) {
         //res.render("search");
 })
 
+app.post("/favourite", bodypars, function(req, res) {
+    console.log("Пришло");
+    console.log(req.body);
+})
+
 app.get("/krasnoyarsk", (req, res) => {
     city = 0;
     res.cookie('city', city, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });

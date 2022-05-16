@@ -70,12 +70,14 @@
                 <div style="margin-top: 60px;"></div>
                 <% for(var i = 0; i<10 && i< dataNeyron.length; i++) {%>
                     <div class="vnytr">
-                        <span><a href="<%= dataNeyron[i].link %> ">
+                        <form action="/favourite" method="POST">
+                            <span><a href="<%= dataNeyron[i].link %> ">
                             <img src="<%= dataNeyron[i].image %> " width="68px" height="68px"></a>
                         </span>
-                        <span><%= dataNeyron[i].name %> </span>
-                        <span><%= dataNeyron[i].cost %> <i class="fa fa-rub"></i> </span>
-                        <span><button class="favourite" id=neyron<%= i %> >Избранное</button></span>
+                            <span><%= dataNeyron[i].name %> </span>
+                            <span><%= dataNeyron[i].cost %> <i class="fa fa-rub"></i> </span>
+                            <span><button class="favourite" id=neyron<%= i %> >Избранное</button></span>
+                        </form>
                     </div>
                     <%} %>
 

@@ -1,11 +1,14 @@
 const puppeteer = require('puppeteer');
 const krasnoyarskService = require('../service/krasnoyarsk-service');
+const DrugsModel = require('../models/Drugs');
 
 class searchController {
-    krasnoyarsk(req, res) { //Красноярск сервис доделать
+    async krasnoyarsk(req, res) { //Красноярск сервис доделать
         console.log(req.body.nameDrug);
         const drugName = req.body.nameDrug;
         let obj, dataNeyron, dataAptekaRU, dataZhivika, dataAptekaOtSklada, dataEapteka, dataZdravcity;
+        const test = await DrugsModel.find({ city: "Красноярск", name_drug: drugName });
+        console.log(test);
         const p1 = new Promise(function(resolve, reject) { //Аптейка нейрон Красноярск Сайт: аптеканейрон.рф
             (async function() {
                 dataNeyron = [];
@@ -59,6 +62,18 @@ class searchController {
                 dataNeyron[0].sort(function(a, b) {
                     return a.cost - b.cost;
                 });
+                /*for (var k = 0; k < dataNeyron[0].length; k++) {
+                    var id_apt = "neyron" + k;
+                    await DrugsModel.create({
+                        city: "Красноярск",
+                        id_apteka: id_apt,
+                        name_apteka: "Нейрон",
+                        name_drug: drugName,
+                        img_drug: dataNeyron[0][k].image,
+                        url_drug: dataNeyron[0][k].link,
+                        cost_drug: dataNeyron[0][k].cost
+                    });
+                }*/
                 resolve();
             })();
 
@@ -170,7 +185,7 @@ class searchController {
                 const browser = await puppeteer.launch({ headless: false });
                 const page = await browser.newPage();
                 await page.setDefaultNavigationTimeout(0)
-                await page.goto(`https://apteka-ot-sklada.ru/krasnoyarsk/catalog?q=${encodeURIComponent(req.body.nameDrug)}`, { waitUntil: "networkidle0" });
+                await page.goto(`https://аптека-от-склада.рф/krasnoyarsk/catalog?q=${encodeURIComponent(req.body.nameDrug)}`, { waitUntil: "networkidle0" });
 
                 //await page.waitForSelector('.ui-card__footer');
                 await page.setViewport({
@@ -281,9 +296,9 @@ class searchController {
                 })
                 let html = await page.evaluate(async() => {
                     let pagee = []
-                    let divs = document.querySelectorAll('div.sc-e16c6409-2');
+                    let divs = document.querySelectorAll('div.sc-79845b11-2');
                     divs.forEach(div => {
-                        let a = div.querySelector('a.sc-e16c6409-6');
+                        let a = div.querySelector('a.sc-79845b11-6');
                         let span = div.querySelector('div.Price_price__qHqZv');
                         if (span != null) {
                             cost = span.innerText;
@@ -325,6 +340,9 @@ class searchController {
                 Eapteka: dataEapteka,
                 Zdravcity: dataZdravcity
             };
+
+            console.log(dataNeyron[0].length);
+            console.log(dataNeyron[0][1].name);
             res.send(data);
         })
     }
@@ -1280,9 +1298,9 @@ class searchController {
                 })
                 let html = await page.evaluate(async() => {
                     let pagee = []
-                    let divs = document.querySelectorAll('div.sc-e16c6409-2');
+                    let divs = document.querySelectorAll('div.sc-79845b11-2');
                     divs.forEach(div => {
-                        let a = div.querySelector('a.sc-e16c6409-6');
+                        let a = div.querySelector('a.sc-79845b11-6');
                         let span = div.querySelector('div.Price_price__qHqZv');
                         if (span != null) {
                             cost = span.innerText;
@@ -1341,7 +1359,7 @@ class searchController {
                     await page.goto('https://megapteka.ru/vladivostok')
                     await page.goto(`https://megapteka.ru/search?q=${encodeURIComponent(req.body.nameDrug)}`);
                     try {
-                        await page.waitForSelector('div.card-item');
+                        await page.waitForSelector('div.container');
                         await page.setViewport({
                             width: 1200,
                             height: 800
@@ -1351,11 +1369,11 @@ class searchController {
                     }
                     let html = await page.evaluate(async() => {
                         let pagee = []
-                        let divs = document.querySelectorAll('div.card-item-wrap');
+                        let divs = document.querySelectorAll('div.container');
                         let numb = 0;
                         divs.forEach(div => {
-                            let a = div.querySelector('div.card-item-info');
-                            let span = div.querySelector('span.thisText');
+                            let a = div.querySelector('div.name');
+                            let span = div.querySelector('div.price');
                             if (span != null) {
                                 cost = span.innerText;
                                 cost = cost.replace(/\s+/g, '');
@@ -1369,7 +1387,7 @@ class searchController {
                                 }
                                 let link = "https://megapteka.ru" + div.querySelector('a').getAttribute('href');
                                 obj = {
-                                    name: a.querySelector('a').innerText,
+                                    name: a.innerText,
                                     cost: parseFloat(cost),
                                     image: image,
                                     link: link
@@ -1631,9 +1649,9 @@ class searchController {
                     })
                     let html = await page.evaluate(async() => {
                         let pagee = []
-                        let divs = document.querySelectorAll('div.sc-e16c6409-2');
+                        let divs = document.querySelectorAll('div.sc-79845b11-2');
                         divs.forEach(div => {
-                            let a = div.querySelector('a.sc-e16c6409-6');
+                            let a = div.querySelector('a.sc-79845b11-6');
                             let span = div.querySelector('div.Price_price__qHqZv');
                             if (span != null) {
                                 cost = span.innerText;
