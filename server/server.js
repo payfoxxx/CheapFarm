@@ -7,12 +7,13 @@ const puppeteer = require('puppeteer');
 const authRouter = require('./routers/authRouter');
 const errorMiddleware = require('./middleware/authMiddleware');
 const searchRouter = require('./routers/searchRouter');
+const favouriteRouter = require('./routers/favouriteRouter');
 
 let port = 8000;
 let hostname = "127.0.0.1"
 
 let app = express();
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
@@ -24,6 +25,7 @@ app.post("/");
 
 app.use("/auth", authRouter);
 app.use("/search", searchRouter);
+app.use("/favourite", favouriteRouter);
 app.use(errorMiddleware);
 
 /*app.get("/search", function(req,res){
@@ -133,15 +135,15 @@ app.use(errorMiddleware);
     })
 }) */
 
-async function start(){
-    try{
-        await mongoose.connect('mongodb+srv://payfox:spiderman2329@cluster0.hbmhf.mongodb.net/mydb',{
+async function start() {
+    try {
+        await mongoose.connect('mongodb+srv://payfox:spiderman2329@cluster0.hbmhf.mongodb.net/mydb', {
             useNewUrlParser: true,
         })
-        app.listen(port,hostname, () => {
+        app.listen(port, hostname, () => {
             console.log(`Сервер запущен: http://${hostname}:${port}/`);
         })
-    } catch(e){
+    } catch (e) {
         console.log(e);
     }
 }

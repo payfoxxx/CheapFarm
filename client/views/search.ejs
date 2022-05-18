@@ -70,14 +70,14 @@
                 <div style="margin-top: 60px;"></div>
                 <% for(var i = 0; i<10 && i< dataNeyron.length; i++) {%>
                     <div class="vnytr">
-                        <form action="/favourite" method="POST">
-                            <span><a href="<%= dataNeyron[i].link %> ">
+
+                        <span><a href="<%= dataNeyron[i].link %> ">
                             <img src="<%= dataNeyron[i].image %> " width="68px" height="68px"></a>
                         </span>
-                            <span><%= dataNeyron[i].name %> </span>
-                            <span><%= dataNeyron[i].cost %> <i class="fa fa-rub"></i> </span>
-                            <span><button class="favourite" id=neyron<%= i %> >Избранное</button></span>
-                        </form>
+                        <span><%= dataNeyron[i].name %> </span>
+                        <span><%= dataNeyron[i].cost %> <i class="fa fa-rub"></i> </span>
+                        <span><button class="favourite" data-id=neyron<%= i %> >Избранное</button></span>
+
                     </div>
                     <%} %>
 
@@ -109,7 +109,7 @@
                         </span>
                     <span><%= dataAptekaRU[i].name %> </span>
                     <span><%= dataAptekaRU[i].cost %> <i class="fa fa-rub"></i> </span>
-                    <span><button class="favourite" id=aptekaru<%= i %> >Избранное</button></span>
+                    <span><button class="favourite" data-id=aptekaru<%= i %> >Избранное</button></span>
         </div>
         <%} %>
             </span>
@@ -140,7 +140,7 @@
                         </span>
                 <span><%= dataZhivika[i].name %> </span>
                 <span><%= dataZhivika[i].cost %> <i class="fa fa-rub"></i> </span>
-                <span><button class="favourite" id=zhivika<%= i %> >Избранное</button></span>
+                <span><button class="favourite" data-id=zhivika<%= i %> >Избранное</button></span>
     </div>
     <%} %>
         </span>
@@ -171,7 +171,7 @@
                         </span>
                     <span><%= dataAptekaOtSklada[i].name %> </span>
                     <span><%= dataAptekaOtSklada[i].cost %> <i class="fa fa-rub"></i> </span>
-                    <span><button class="favourite" id=aptotsklada<%= i %> >Избранное</button></span>
+                    <span><button class="favourite" data-id=aptotsklada<%= i %> >Избранное</button></span>
         </div>
         <%} %>
             </span>
@@ -202,7 +202,7 @@
                         </span>
                         <span><%= dataEapteka[i].name %> </span>
                         <span><%= dataEapteka[i].cost %> <i class="fa fa-rub"></i> </span>
-                        <span><button class="favourite" id=eapteka<%= i %> >Избранное</button></span>
+                        <span><button class="favourite" data-id=eapteka<%= i %> >Избранное</button></span>
             </div>
             <%} %>
                 </span>
@@ -233,7 +233,7 @@
                         </span>
                             <span><%= dataZdravcity[i].name %> </span>
                             <span><%= dataZdravcity[i].cost %> <i class="fa fa-rub"></i> </span>
-                            <span><button class="favourite" id=zdravcity<%= i %> >Избранное</button></span>
+                            <span><button class="favourite" data-id=zdravcity<%= i %> >Избранное</button></span>
                 </div>
                 <%} %>
                     </span>
@@ -248,6 +248,20 @@
                         }
                         window.addEventListener('load', () => { /* Страница загружена, включая все ресурсы */
                             preloader.classList.add('preloader_hidden') /* добавляем ему класс для скрытия */
+                        })
+                    </script>
+                    <script>
+                        const btns = document.querySelectorAll('.favourite');
+                        const xhr = new XMLHttpRequest();
+
+                        btns.forEach(el => {
+                            el.addEventListener('click', (e) => {
+                                let self = e.currentTarget;
+                                let id = self.dataset.id;
+                                console.log(id);
+                                xhr.open("GET", "/favourite?" + id, true);
+                                xhr.send();
+                            })
                         })
                     </script>
 </body>

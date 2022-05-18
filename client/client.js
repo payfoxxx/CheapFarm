@@ -182,9 +182,21 @@ app.get("/search", bodypars, function(req, res) {
         //res.render("search");
 })
 
-app.post("/favourite", bodypars, function(req, res) {
-    console.log("Пришло");
-    console.log(req.body);
+app.get("/favourite", bodypars, function(req, res) {
+    var id = req.url;
+    id = id.substring(11);
+    console.log(id);
+    const cookieHeader = req.headers.cookie;
+    let cookieObj = cookieParsers(cookieHeader);
+    const refreshTokenBuf = "refreshToken=" + cookieObj['refreshToken'];
+    const refreshTokenBufNew = cookieObj['refreshToken']
+    requesting.post("http://127.0.0.1:8000/favourite/add", { form: { idDrug: id, city: Object.values(cities)[city], token: refreshTokenBufNew } }, function(err, resp, body) {
+        if (resp.statusCode == 200) {
+
+        } else {
+            res.send("Error");
+        }
+    })
 })
 
 app.get("/krasnoyarsk", (req, res) => {
