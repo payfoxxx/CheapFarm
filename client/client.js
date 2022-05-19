@@ -105,11 +105,12 @@ app.get("/profile", bodypars, (req, res) => {
     const cookieHeader = req.headers.cookie;
     let cookieObj = cookieParsers(cookieHeader);
     const refreshTokenBuf = "refreshToken=" + cookieObj['refreshToken'];
-    requesting.post("http://127.0.0.1:8000/auth/profile", { form: { name: refreshTokenBuf } }, function(err, resp, body) {
+    const refreshTokenBufNew = cookieObj['refreshToken'];
+    requesting.post("http://127.0.0.1:8000/auth/profile", { form: { name: refreshTokenBufNew } }, function(err, resp, body) {
         if (resp.statusCode == 200) {
             var data = JSON.parse(body);
-            console.log(data[0].name);
-            res.render("profile.ejs", { name: data[0].name })
+            console.log(data.drugs);
+            res.render("profile.ejs", { name: data.nameUser, drugs: data.drugs })
         } else {
             res.send("error");
         }
@@ -188,14 +189,39 @@ app.get("/favourite", bodypars, function(req, res) {
     console.log(id);
     const cookieHeader = req.headers.cookie;
     let cookieObj = cookieParsers(cookieHeader);
-    const refreshTokenBuf = "refreshToken=" + cookieObj['refreshToken'];
-    const refreshTokenBufNew = cookieObj['refreshToken']
+    const refreshTokenBufNew = cookieObj['refreshToken'];
     requesting.post("http://127.0.0.1:8000/favourite/add", { form: { idDrug: id, city: Object.values(cities)[city], token: refreshTokenBufNew } }, function(err, resp, body) {
         if (resp.statusCode == 200) {
-
+            res.redirect("/search");
         } else {
             res.send("Error");
         }
+    })
+})
+
+app.get("/delfav", bodypars, function(req, res) {
+    var id = req.url;
+    id = id.substring(8);
+    console.log(id);
+    const cookieHeader = req.headers.cookie;
+    let cookieObj = cookieParsers(cookieHeader);
+    const refreshTokenBufNew = cookieObj['refreshToken'];
+    requesting.post("http://127.0.0.1:8000/favourite/delete", { form: { idDrug: id, city: Object.values(cities)[city], token: refreshTokenBufNew } }, function(err, resp, body) {
+        if (resp.statusCode == 200) {
+            console.log("Vipolnil")
+            requesting.post("http://127.0.0.1:8000/auth/profile", { form: { name: refreshTokenBufNew } }, function(err, resp, body) {
+                if (resp.statusCode == 200) {
+                    var data = JSON.parse(body);
+                    console.log(data.drugs);
+                    res.render("profile.ejs", { name: data.nameUser, drugs: data.drugs })
+                } else {
+                    res.send("error");
+                }
+            })
+        } else {
+            res.send("Error");
+        }
+        res.redirect("profile")
     })
 })
 

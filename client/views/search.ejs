@@ -76,7 +76,7 @@
                         </span>
                         <span><%= dataNeyron[i].name %> </span>
                         <span><%= dataNeyron[i].cost %> <i class="fa fa-rub"></i> </span>
-                        <span><button class="favourite" data-id=neyron<%= i %> >Избранное</button></span>
+                        <span><button class="favourite open-popup" data-id=neyron<%= i %> >Избранное</button></span>
 
                     </div>
                     <%} %>
@@ -109,7 +109,7 @@
                         </span>
                     <span><%= dataAptekaRU[i].name %> </span>
                     <span><%= dataAptekaRU[i].cost %> <i class="fa fa-rub"></i> </span>
-                    <span><button class="favourite" data-id=aptekaru<%= i %> >Избранное</button></span>
+                    <span><button class="favourite open-popup" data-id=aptekaru<%= i %> >Избранное</button></span>
         </div>
         <%} %>
             </span>
@@ -140,7 +140,7 @@
                         </span>
                 <span><%= dataZhivika[i].name %> </span>
                 <span><%= dataZhivika[i].cost %> <i class="fa fa-rub"></i> </span>
-                <span><button class="favourite" data-id=zhivika<%= i %> >Избранное</button></span>
+                <span><button class="favourite open-popup" data-id=zhivika<%= i %> >Избранное</button></span>
     </div>
     <%} %>
         </span>
@@ -171,7 +171,7 @@
                         </span>
                     <span><%= dataAptekaOtSklada[i].name %> </span>
                     <span><%= dataAptekaOtSklada[i].cost %> <i class="fa fa-rub"></i> </span>
-                    <span><button class="favourite" data-id=aptotsklada<%= i %> >Избранное</button></span>
+                    <span><button class="favourite open-popup" data-id=aptotsklada<%= i %> >Избранное</button></span>
         </div>
         <%} %>
             </span>
@@ -202,7 +202,7 @@
                         </span>
                         <span><%= dataEapteka[i].name %> </span>
                         <span><%= dataEapteka[i].cost %> <i class="fa fa-rub"></i> </span>
-                        <span><button class="favourite" data-id=eapteka<%= i %> >Избранное</button></span>
+                        <span><button class="favourite open-popup" data-id=eapteka<%= i %> >Избранное</button></span>
             </div>
             <%} %>
                 </span>
@@ -233,12 +233,22 @@
                         </span>
                             <span><%= dataZdravcity[i].name %> </span>
                             <span><%= dataZdravcity[i].cost %> <i class="fa fa-rub"></i> </span>
-                            <span><button class="favourite" data-id=zdravcity<%= i %> >Избранное</button></span>
+                            <span><button class="favourite open-popup" data-id=zdravcity<%= i %> >Избранное</button></span>
                 </div>
                 <%} %>
                     </span>
                     </details>
                     </div>
+                    </div>
+
+                    <div class="popup__bg">
+                        <div class="popup">
+                            <a href="#" class="close-popup">X</a>
+                            <div class="popup_title">Добавление в избранное</div>
+                            <div class="popup_cities">
+                                <span>Препарат успешно добавлен в избранное</span>
+                            </div>
+                        </div>
                     </div>
 
                     <script>
@@ -262,6 +272,24 @@
                                 xhr.open("GET", "/favourite?" + id, true);
                                 xhr.send();
                             })
+                        })
+                    </script>
+                    <script>
+                        let popupBg = document.querySelector('.popup__bg');
+                        let popup = document.querySelector('.popup');
+                        let openPopupButton = document.querySelectorAll('.open-popup');
+                        let closePopupButton = document.querySelector('.close-popup');
+
+                        openPopupButton.forEach(el => {
+                            el.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                popupBg.classList.add('active');
+                                popup.classList.add('active');
+                            })
+                        })
+                        closePopupButton.addEventListener('click', () => {
+                            popupBg.classList.remove('active');
+                            popup.classList.remove('active');
                         })
                     </script>
 </body>

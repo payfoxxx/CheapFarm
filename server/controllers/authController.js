@@ -1,5 +1,7 @@
 const User = require('../models/User');
 const tokenModel = require('../models/Tokens');
+const favouriteModel = require('../models/Favourite');
+const drugsModel = require('../models/Drugs');
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const userService = require('../service/user-service');
@@ -36,12 +38,25 @@ class authController {
     }
 
     async profile(req, res, next) {
-        try {
-            const users = await User.find();
-            return res.json(users);
-        } catch (e) {
-            next(e);
+        const userbytoken = await tokenModel.find({ refreshToken: req.body.name });
+        const user = await User.find(userbytoken[0].user);
+
+        const fav = await favouriteModel.find({ user: user[0]._id });
+        console.log(fav.length);
+        var drugs = [];
+        if (fav.length > 0) {
+            for (var i = 0; i < fav.length; i++) {
+                var drug_buf = await drugsModel.find({ _id: fav[i].drug });
+                drugs.push(drug_buf);
+            }
         }
+        console.log(drugs);
+        const data = {
+            nameUser: user[0].name,
+            drugs: drugs
+        }
+        return res.json(data);
+
     }
 
     async logout(req, res, next) {

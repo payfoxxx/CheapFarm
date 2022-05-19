@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/styles/header.css" type="text/css"/>
-    <link rel="stylesheet" href="/styles/registration.css" type="text/css"/>
-    <link rel="stylesheet" href="/styles/profile.css" type="text/css"/>
+    <link rel="stylesheet" href="/styles/header.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/registration.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/profile.css" type="text/css" />
     <title>CheapFarm</title>
 </head>
+
 <body>
     <div class="preloader">
         <div class="sk-circle">
@@ -23,29 +25,43 @@
             <div class="sk-circle10 sk-child"></div>
             <div class="sk-circle11 sk-child"></div>
             <div class="sk-circle12 sk-child"></div>
-          </div>
+        </div>
     </div>
     <div class="header">
-    <header>
-        <div class="header_section">
-        <a href="/">
-            <img src="/images/logo_test2.png">
-        </a>
-            <div class="header_item"><a href="/about" class="header_item_txt">О проекте</a></div>
-            <div class="search_block">
-                <form action="/search" method="GET" class="search_form">
-                    <p><input type="search" name="nameDrug" placeholder="Введите название"></p>
-                    <p><button type="submit" id="btn"></button></p>
-                </form>
+        <header>
+            <div class="header_section">
+                <a href="/">
+                    <img src="/images/logo_test2.png">
+                </a>
+                <div class="header_item"><a href="/about" class="header_item_txt">О проекте</a></div>
+                <div class="search_block">
+                    <form action="/search" method="GET" class="search_form">
+                        <p><input type="search" name="nameDrug" placeholder="Введите название"></p>
+                        <p><button type="submit" id="btn"></button></p>
+                    </form>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
     </div>
     <div class="hello">
-        <p>Здравствуйте, <%= name %> </p>
+        <p>Здравствуйте,
+            <%= name %>
+        </p>
+    </div>
+    <div class="item_header">
+        <p>Ваши избранные товары</p>
     </div>
     <div class="items">
-        <p>Ваши товары</p>
+        <% for(var i = 0; i<10 && i< drugs.length; i++) {%>
+            <span><a href="<%= drugs[i][0].link %> ">
+                    <img src="<%= drugs[i][0].image %> " width="68px" height="68px"></a>
+                </span>
+            <span><%= drugs[i][0].name_apteka %> </span>
+            <span><%= drugs[i][0].city %> </span>
+            <span><%= drugs[i][0].name %> </span>
+            <span><%= drugs[i][0].cost %> <i class="fa fa-rub"></i> </span>
+            <span><button class="delete" data-id=<%= drugs[i][0].id_apteka %>  >Удалить</button></span>
+            <%} %>
     </div>
     <script>
         const preloader = document.querySelector('.preloader')
@@ -54,5 +70,19 @@
         }
         preloader.classList.add('preloader_hidden')
     </script>
+    <script>
+        const btns = document.querySelectorAll('.delete');
+        const xhr = new XMLHttpRequest();
+        btns.forEach(el => {
+            el.addEventListener('click', (e) => {
+                let self = e.currentTarget;
+                let id = self.dataset.id;
+                console.log(id);
+                xhr.open("GET", "/delfav?" + id, true);
+                xhr.send();
+            })
+        })
+    </script>
 </body>
+
 </html>
