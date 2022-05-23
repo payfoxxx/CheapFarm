@@ -261,7 +261,7 @@ class searchController {
                                 let image;
                                 try {
                                     image = div.querySelector('img.goods-photo').getAttribute('src');
-                                    image = "https://apteka-ot-sklada.ru" + image;
+                                    image = "https://аптека-от-склада.рф" + image;
                                 } catch {
                                     image = "https://ugolshop.ru/image/cache/placeholder-800x800.png";
                                 }
@@ -270,7 +270,7 @@ class searchController {
                                     name: a.innerText,
                                     cost: parseInt(cost),
                                     image: image,
-                                    link: "https://apteka-ot-sklada.ru" + div.querySelector('a.goods-card__link').getAttribute('href')
+                                    link: "https://аптека-от-склада.рф" + div.querySelector('a.goods-card__link').getAttribute('href')
                                 }
                                 pagee.push(obj);
                             }
