@@ -53,14 +53,16 @@
     </div>
     <div class="items">
         <% for(var i = 0; i<10 && i< drugs.length; i++) {%>
-            <span><a href="<%= drugs[i][0].link %> ">
-                    <img src="<%= drugs[i][0].image %> " width="68px" height="68px"></a>
+            <div class="item">
+                <span><a href="<%= drugs[i][0].link %> ">
+                    <img src="<%= drugs[i][0].image %> " width="100px" height="100px"></a>
                 </span>
-            <span><%= drugs[i][0].name_apteka %> </span>
-            <span><%= drugs[i][0].city %> </span>
-            <span><%= drugs[i][0].name %> </span>
-            <span><%= drugs[i][0].cost %> <i class="fa fa-rub"></i> </span>
-            <span><button class="delete" data-id=<%= drugs[i][0].id_apteka %>  >Удалить</button></span>
+                <span><%= drugs[i][0].name_apteka %> </span>
+                <span><%= drugs[i][0].city %> </span>
+                <span><%= drugs[i][0].name %> </span>
+                <span><%= drugs[i][0].cost %> <i class="fa fa-rub"></i> </span>
+                <span><button class="delete" data-id=<%= drugs[i][0].id_apteka %>  >Удалить</button></span>
+            </div>
             <%} %>
     </div>
     <script>

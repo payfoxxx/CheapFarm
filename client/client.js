@@ -135,7 +135,6 @@ app.get("/logout", bodypars, (req, res) => {
 app.post("/auth/registration", bodypars, (req, res) => {
     requesting.post("http://127.0.0.1:8000/auth/registration", { form: { name: req.body } }, function(err, resp, body) {
         if (resp.statusCode == 200) {
-            isLogged = true;
             res.redirect("/about");
         } else {
             res.send("error");
@@ -152,7 +151,8 @@ app.post("/auth/login", bodypars, (req, res) => {
             //localStorage.setItem('token',data.accessToken);
             res.cookie('refreshToken', data.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
             console.log(data.name);
-            res.render("profile.ejs", { name: data.name });
+            res.redirect('profile');
+            //res.render("profile.ejs", { name: data.name });
         } else {
             res.send("error");
         }
