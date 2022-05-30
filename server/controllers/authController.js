@@ -39,7 +39,8 @@ class authController {
 
     async profile(req, res, next) {
         const userbytoken = await tokenModel.find({ refreshToken: req.body.name });
-        const user = await User.find(userbytoken[0].user);
+        const user = await User.find({ _id: userbytoken[0].user });
+        console.log("user", userbytoken);
 
         const fav = await favouriteModel.find({ user: user[0]._id });
         console.log(fav.length);
