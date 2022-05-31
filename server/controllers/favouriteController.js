@@ -8,7 +8,7 @@ class favouriteController {
         console.log(req.body);
         const user = await Token.find({ refreshToken: req.body.token });
         console.log(user[0].user);
-        const drug = await DrugModel.find({ city: req.body.city, id_apteka: req.body.idDrug });
+        const drug = await DrugModel.find({ city: req.body.city, id_apteka: req.body.idDrug, name_drug: req.body.drug });
         await Favourite.create({ user: user[0].user, drug: drug[0]._id });
     }
 
@@ -18,9 +18,9 @@ class favouriteController {
 
     async deleteFav(req, res) {
         const user = await Token.find({ refreshToken: req.body.token });
-        const drug = await DrugModel.find({ city: req.body.city, id_apteka: req.body.idDrug });
+        const drug = await DrugModel.find({ city: req.body.city, id_apteka: req.body.idDrug, name: req.body.drug });
         console.log(user[0].user);
-        console.log(drug[0]._id);
+        console.log(drug[0]);
         await Favourite.deleteOne({ user: user[0].user, drug: drug[0]._id });
     }
 }

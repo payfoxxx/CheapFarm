@@ -269,7 +269,8 @@
                                 let self = e.currentTarget;
                                 let id = self.dataset.id;
                                 console.log(id);
-                                xhr.open("GET", "/favourite?" + id, true);
+                                let namedrug = document.querySelector('.test').innerText;
+                                xhr.open("GET", "/favourite?" + id + ";" + namedrug, true);
                                 xhr.send();
                             })
                         })

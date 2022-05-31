@@ -184,13 +184,17 @@ app.get("/search", bodypars, function(req, res) {
 })
 
 app.get("/favourite", bodypars, function(req, res) {
-    var id = req.url;
-    id = id.substring(11);
-    console.log(id);
+    var id_d = req.url;
+    id_d = id_d.substring(11);
+    console.log(id_d);
+    id_d = id_d.split(";");
+    var id = id_d[0];
+    var drug_name = id_d[1];
+    drug_name = decodeURIComponent(drug_name);
     const cookieHeader = req.headers.cookie;
     let cookieObj = cookieParsers(cookieHeader);
     const refreshTokenBufNew = cookieObj['refreshToken'];
-    requesting.post("http://127.0.0.1:8000/favourite/add", { form: { idDrug: id, city: Object.values(cities)[city], token: refreshTokenBufNew } }, function(err, resp, body) {
+    requesting.post("http://127.0.0.1:8000/favourite/add", { form: { idDrug: id, city: Object.values(cities)[city], token: refreshTokenBufNew, drug: drug_name } }, function(err, resp, body) {
         if (resp.statusCode == 200) {
             res.redirect("/search");
         } else {
@@ -200,13 +204,18 @@ app.get("/favourite", bodypars, function(req, res) {
 })
 
 app.get("/delfav", bodypars, function(req, res) {
-    var id = req.url;
-    id = id.substring(8);
-    console.log(id);
+    var id_d = req.url;
+    id_d = id_d.substring(8);
+    console.log(id_d);
+    id_d = id_d.split(";");
+    var id = id_d[0];
+    var drug_name = id_d[1];
+    drug_name = decodeURIComponent(drug_name);
+    console.log("для удаления", drug_name);
     const cookieHeader = req.headers.cookie;
     let cookieObj = cookieParsers(cookieHeader);
     const refreshTokenBufNew = cookieObj['refreshToken'];
-    requesting.post("http://127.0.0.1:8000/favourite/delete", { form: { idDrug: id, city: Object.values(cities)[city], token: refreshTokenBufNew } }, function(err, resp, body) {
+    requesting.post("http://127.0.0.1:8000/favourite/delete", { form: { idDrug: id, city: Object.values(cities)[city], token: refreshTokenBufNew, drug: drug_name } }, function(err, resp, body) {
         if (resp.statusCode == 200) {
             console.log("Vipolnil")
             requesting.post("http://127.0.0.1:8000/auth/profile", { form: { name: refreshTokenBufNew } }, function(err, resp, body) {

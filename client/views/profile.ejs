@@ -59,7 +59,7 @@
                 </span>
                 <span><%= drugs[i][0].name_apteka %> </span>
                 <span><%= drugs[i][0].city %> </span>
-                <span><%= drugs[i][0].name %> </span>
+                <span class="test"><%= drugs[i][0].name %> </span>
                 <span><%= drugs[i][0].cost %> <i class="fa fa-rub"></i> </span>
                 <span><button class="delete" data-id=<%= drugs[i][0].id_apteka %>  >Удалить</button></span>
             </div>
@@ -79,8 +79,10 @@
             el.addEventListener('click', (e) => {
                 let self = e.currentTarget;
                 let id = self.dataset.id;
+                let parent = self.closest('.item');
+                let drug_name = parent.querySelector('.test').innerText;
                 console.log(id);
-                xhr.open("GET", "/delfav?" + id, true);
+                xhr.open("GET", "/delfav?" + id + ";" + drug_name, true);
                 xhr.send();
             })
         })
